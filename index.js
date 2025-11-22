@@ -57,11 +57,11 @@ app.put('/api/games/:id', async (req, res) => {
       return res.status(400).json({ error: 'ID inválido' });
     }
 
-    // show the targeted document before update
+    
     const before = await Game.findById(id).lean();
     console.log('Document BEFORE update (found?):', !!before, before ? before : 'NOT FOUND');
 
-    // clean payload and build $set
+    
     const payload = { ...req.body };
     delete payload._id;
     delete payload.id;
@@ -70,21 +70,21 @@ app.put('/api/games/:id', async (req, res) => {
     });
     console.log('Using $set payload =', payload);
 
-    // perform update using findOneAndUpdate to get query details in mongoose debug
-    mongoose.set('debug', true); // enable debug logging of queries (prints to console)
+    
+    mongoose.set('debug', true); 
     const updated = await Game.findByIdAndUpdate(
       id,
       { $set: payload },
       { new: true, runValidators: true, context: 'query' }
     );
-    mongoose.set('debug', false); // turn off debug to avoid noisy logs afterwards
+    mongoose.set('debug', false); 
 
-    // show result and also list any documents that match the updated fields (for debugging)
+   
     console.log('Document AFTER update (result):', updated);
     if (payload.title) {
       const sameTitle = await Game.find({ title: payload.title }).lean();
       console.log('Documents with same title after update (count):', sameTitle.length);
-      // only print small info for each
+  
       console.log(sameTitle.map(d => ({ _id: d._id.toString(), title: d.title })));
     }
 

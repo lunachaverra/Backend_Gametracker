@@ -28,8 +28,7 @@ exports.updateGame = async (req, res) => {
     delete update._id;
     delete update.id;
 
-    // Opcional: evitar actualizar a valores vacíos no deseados
-    // Por ejemplo, si algunos campos son undefined, podrías borrarlos:
+    //evitar actualizar a valores vacíos no deseados//
     Object.keys(update).forEach(k => {
       if (typeof update[k] === 'undefined') delete update[k];
     });

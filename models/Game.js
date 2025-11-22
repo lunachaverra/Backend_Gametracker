@@ -8,7 +8,7 @@ const GameSchema = new mongoose.Schema({
   // Imagen de portada
   cover: { type: String },
 
-  // 🎯 AGREGADO → campo genre
+  //AGREGADO → campo genre
   genre: { type: String, required: true },
 
   status: { type: String, default: "Pendiente" },
